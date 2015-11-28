@@ -3,25 +3,19 @@ var Money = require('./Money');
 function BankAccount() {
 
     var transactions = []
-    function balance() {
-        return {}
+    function deposit(money) {
+        transactions = transactions.concat(money);
+        return transactions.reduce(Money.add, new Money(0));
     }
 
-    function deposit(money) {
-
-        transactions = transactions.concat(money);
-        //function sum(moneyBefore, moneyAfter) {
-        //    return moneyBefore.add(moneyAfter);
-        //}
-
+    function withdraw(money) {
+        transactions = transactions.concat(Money.negate(money));
         return transactions.reduce(Money.add, new Money(0));
-
     }
 
     return {
-        balance: balance,
-
-        deposit: deposit
+        deposit: deposit,
+        withdraw: withdraw
     }
 }
 
