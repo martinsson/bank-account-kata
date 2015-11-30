@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var sinon = require('sinon');
 
 var BankAccount = require('../src/BankAccount');
 var money = require('../src/Money');
@@ -8,7 +9,7 @@ describe('BankAccount', function() {
     var account;
 
     beforeEach(function () {
-        account = anAccount();
+        account = new BankAccount(sinon.stub());
     })
 
     it('it has 0 balance when opened', function() {
@@ -38,11 +39,14 @@ describe('BankAccount', function() {
         });
 
 
-        it.skip('every transaction contains its date', function() {
+        it('every transaction contains its date', function() {
+            var dateProvider = sinon.stub().returns(new Date(2015, 11, 30));
+            var account = new BankAccount(dateProvider);
+
             account.deposit(money(15));
             var statement = account.statement();
             var expectedDate = new Date(2015, 11, 30);
-            expect(statement.transactions[0]).to.have.property("date", expectedDate)
+            expect(statement.transactions[0]).to.have.property("date").to.deep.equal(expectedDate);
         });
 
     });
@@ -51,6 +55,3 @@ describe('BankAccount', function() {
 
 });
 
-function anAccount() {
-    return new BankAccount();
-}

@@ -2,20 +2,14 @@ var Money = require('./Money');
 var Statement = require('./Statement');
 var Transaction = require('./Transaction');
 
-function noMoney() {
-    return new Money(0);
-}
-function getMoney(t) {
-    return t.money
-};
-
-function BankAccount() {
+function BankAccount(dateProviderFn) {
 
     var transactions = [];
 
 
     function deposit(money) {
-        transactions = transactions.concat(new Transaction(money));
+        var date = dateProviderFn();
+        transactions = transactions.concat(new Transaction(money, date));
         return transactions.map(getMoney).reduce(Money.add, noMoney());
     }
 
@@ -38,5 +32,14 @@ function BankAccount() {
         statement: statement
     }
 }
+
+
+function noMoney() {
+    return new Money(0);
+}
+function getMoney(t) {
+    return t.money
+}
+
 
 module.exports = BankAccount;
