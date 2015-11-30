@@ -1,5 +1,5 @@
 var Money = require('./Money');
-
+var Statement = require('./Statement');
 function BankAccount() {
 
     var transactions = []
@@ -13,9 +13,16 @@ function BankAccount() {
         return transactions.reduce(Money.add, new Money(0));
     }
 
+    function statement() {
+
+        return new Statement();
+
+    }
+
     return {
         deposit: deposit,
-        withdraw: withdraw
+        withdraw: withdraw,
+        statement: statement
     }
 }
 
