@@ -1,3 +1,4 @@
+var Transaction = require('./Transaction');
 
 function Statement(transactions) {
 
@@ -6,6 +7,11 @@ function Statement(transactions) {
     }
 
 }
-
+Statement.print = function (statement) {
+    return {
+        header: ["date", "debit", "credit"],
+        balance: Transaction.total(statement.transactions).amount
+    }
+}
 module.exports = Statement
 

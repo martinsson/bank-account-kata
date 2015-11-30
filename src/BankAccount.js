@@ -10,13 +10,13 @@ function BankAccount(dateProviderFn) {
     function deposit(money) {
         var date = dateProviderFn();
         transactions = transactions.concat(new Transaction(money, date));
-        return transactions.map(getMoney).reduce(Money.add, noMoney());
+        return Transaction.total(transactions);
     }
 
     function withdraw(money) {
         var negativeMoney = Money.negate(money);
         transactions = transactions.concat(new Transaction(negativeMoney));
-        return transactions.map(getMoney).reduce(Money.add, noMoney());
+        return Transaction.total(transactions);
     }
 
     function statement() {
@@ -31,14 +31,6 @@ function BankAccount(dateProviderFn) {
         withdraw: withdraw,
         statement: statement
     }
-}
-
-
-function noMoney() {
-    return new Money(0);
-}
-function getMoney(t) {
-    return t.money
 }
 
 
