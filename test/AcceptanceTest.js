@@ -10,12 +10,17 @@ describe('Acceptance', function() {
         account(deposit(18));
         account(deposit(1000));
         account(withdraw(300));
+        var header;
         expect(account.statement()).to.include(header)
 
         // ...
     });
 
     it('balance is the sum of all movements', function() {
+    });
+
+    it('the date is present for each transaction', function() {
+        
     });
 
 
