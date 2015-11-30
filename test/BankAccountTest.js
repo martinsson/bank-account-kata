@@ -35,9 +35,15 @@ describe('BankAccount', function() {
             account.deposit(money(10));
             var statement = account.statement();
             expect(statement.transactions).to.have.length(1);
-
         });
 
+
+        it.skip('every transaction contains its date', function() {
+            account.deposit(money(15));
+            var statement = account.statement();
+            var expectedDate = new Date(2015, 11, 30);
+            expect(statement.transactions[0]).to.have.property("date", expectedDate)
+        });
 
     });
 
