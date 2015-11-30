@@ -25,10 +25,20 @@ describe('BankAccount', function() {
     });
 
     describe('statement()', function() {
-        it('lists all movements', function() {
+        it('has no transactions to start with', function() {
             var statement = account.statement();
-            expect(statement).to.deep.equal(new Statement())
+            var emptyStatement = new Statement();
+            expect(statement).to.deep.equal(emptyStatement)
         });
+
+        it('contains all transactions made on the account', function() {
+            account.deposit(money(10));
+            var statement = account.statement();
+            expect(statement.transactions).to.have.length(1);
+
+        });
+
+
     });
 
 

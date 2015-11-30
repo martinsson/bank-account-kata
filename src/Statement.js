@@ -1,5 +1,9 @@
 
-function Statement() {
+function Statement(transactions) {
+
+    return {
+        transactions: transactions || []
+    }
 
 }
 

@@ -15,7 +15,7 @@ function BankAccount() {
 
     function statement() {
 
-        return new Statement();
+        return new Statement(transactions);
 
     }
 
