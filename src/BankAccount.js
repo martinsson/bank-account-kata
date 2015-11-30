@@ -2,20 +2,27 @@ var Money = require('./Money');
 var Statement = require('./Statement');
 var Transaction = require('./Transaction');
 
+function noMoney() {
+    return new Money(0);
+}
+function getMoney(t) {
+    return t.money
+};
+
 function BankAccount() {
 
-    var moneyList = []
     var transactions = [];
+
 
     function deposit(money) {
         transactions = transactions.concat(new Transaction(money));
-
-        return transactions.map(function (t) { return t.money}).reduce(Money.add, new Money(0));
+        return transactions.map(getMoney).reduce(Money.add, noMoney());
     }
 
     function withdraw(money) {
-        transactions = transactions.concat(new Transaction(Money.negate(money)));
-        return transactions.map(function (t) { return t.money}).reduce(Money.add, new Money(0));
+        var negativeMoney = Money.negate(money);
+        transactions = transactions.concat(new Transaction(negativeMoney));
+        return transactions.map(getMoney).reduce(Money.add, noMoney());
     }
 
     function statement() {
