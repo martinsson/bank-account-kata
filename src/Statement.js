@@ -1,4 +1,5 @@
 var Transaction = require('./Transaction');
+var Money = require('./Money')
 
 function Statement(transactions) {
 
@@ -10,7 +11,7 @@ function Statement(transactions) {
 
 function lines(transactions) {
     return transactions.map(function (t) {
-        return ["not dte yet", "no debit", t.money.amount]
+        return ["not dte yet", Money.negate(t.money).amount, t.money.amount]
     })
 }
 
