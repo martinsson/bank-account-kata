@@ -44,9 +44,11 @@ describe('BankAccount', function() {
             var account = new BankAccount(dateProvider);
 
             account.deposit(money(15));
+            account.withdraw(money(15));
             var statement = account.statement();
             var expectedDate = new Date(2015, 11, 30);
             expect(statement.transactions[0]).to.have.property("date").to.deep.equal(expectedDate);
+            expect(statement.transactions[1]).to.have.property("date").to.deep.equal(expectedDate);
         });
 
     });

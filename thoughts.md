@@ -13,6 +13,9 @@
 
 // I almost didn't see the extraneous debits and credits in the statement
 
+// managed to forget about the date on withdrawals in bankAccount
+
+
 
 TODO
 
