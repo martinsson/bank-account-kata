@@ -10,7 +10,7 @@ function Statement(transactions) {
 
 }
 
-function lines(transactions) {
+function _lines(transactions) {
     return transactions.map(function (t) {
         var date = dateformat(t.date, "dd/mm/yyyy");
         var transactionAmount = t.money.amount;
@@ -24,8 +24,9 @@ Statement.print = function (statement) {
     return {
         header: ["date", "debit", "credit"],
         balance: Transaction.total(statement.transactions).amount,
-        lines: lines(statement.transactions)
+        lines: _lines(statement.transactions)
     }
 }
+
 module.exports = Statement
 

@@ -10,13 +10,13 @@ function Transaction(money, date) {
 }
 
 Transaction.total = function (transactions) {
-    return transactions.map(getMoney).reduce(Money.add, noMoney());
+    return transactions.map(_getMoney).reduce(Money.add, _noMoney());
 
 }
-function noMoney() {
+function _noMoney() {
     return new Money(0);
 }
-function getMoney(t) {
+function _getMoney(t) {
     return t.money
 }
 
