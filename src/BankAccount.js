@@ -20,9 +20,7 @@ function BankAccount(dateProviderFn) {
     }
 
     function statement() {
-
         return new Statement(transactions);
-
     }
 
 

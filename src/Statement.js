@@ -1,5 +1,6 @@
 var Transaction = require('./Transaction');
 var Money = require('./Money')
+var dateformat = require('dateformat');
 
 function Statement(transactions) {
 
@@ -11,7 +12,11 @@ function Statement(transactions) {
 
 function lines(transactions) {
     return transactions.map(function (t) {
-        return ["not dte yet", Money.negate(t.money).amount, t.money.amount]
+        var date = dateformat(t.date, "dd/mm/yyyy");
+        var transactionAmount = t.money.amount;
+        var creditAmount = transactionAmount >0 ? transactionAmount: "";
+        var debitAmount = transactionAmount <0 ? Money.negate(t.money).amount : "";
+        return [date, debitAmount, creditAmount]
     })
 }
 
