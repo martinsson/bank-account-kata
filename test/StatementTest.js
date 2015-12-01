@@ -36,21 +36,25 @@ describe('Statement', function() {
         it('every transaction has a date', function () {
             var statement = new Statement([deposit(10, new Date(2010, 11, 25))]);
             var printOut = Statement.print(statement);
-            expect(printOut.lines[0][dateColumnIndex]).to.equal("25/12/2010");
+            var firstLine = printOut.lines[0];
+            var transactionDate = firstLine[dateColumnIndex];
+            expect(transactionDate).to.equal("25/12/2010");
         });
 
         it('deposits appear in the credit column', function() {
             var statement = new Statement([deposit(10)]);
             var printOut = Statement.print(statement);
-            expect(printOut.lines[0][creditColumnIndex]).to.equal(10);
-            expect(printOut.lines[0][debitColumntIndex]).to.be.empty;
+            var firstLine = printOut.lines[0];
+            expect(firstLine[creditColumnIndex]).to.equal(10);
+            expect(firstLine[debitColumntIndex]).to.be.empty;
         });
 
         it('withdrawals appear in the debit column', function() {
             var statement = new Statement([withdraw(25)]);
             var printOut = Statement.print(statement);
-            expect(printOut.lines[0][creditColumnIndex]).to.be.empty;
-            expect(printOut.lines[0][debitColumntIndex]).to.equal(25);
+            var firstLine = printOut.lines[0];
+            expect(firstLine[creditColumnIndex]).to.be.empty;
+            expect(firstLine[debitColumntIndex]).to.equal(25);
 
         })
     });
