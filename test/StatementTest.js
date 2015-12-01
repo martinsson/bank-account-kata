@@ -24,7 +24,16 @@ describe('Statement', function() {
             expect(printOut.balance).to.equal(3);
         });
 
-        it('contains all transactions');
+        it('every transaction has a date');
+        it('deposits appear in the credit column', function() {
+            var statement = new Statement([deposit(10)]);
+            var printOut = Statement.print(statement);
+            expect(printOut.lines).to.have.length(1);
+            var creditColumnIndex = 2;
+            expect(printOut.lines[0][creditColumnIndex]).to.equal(10);
+        });
+
+        it('withdrawals appear in the debit column')
     });
 
 });
