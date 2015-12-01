@@ -16,9 +16,9 @@ describe('Acceptance', function () {
         var statement = account.computeStatement();
         var nl = "\n";
         expect(statement).to.equal(
-            "date        debit   credit" + nl +
-            "20/02/2011          12" + nl +
-            "20/02/2011          18" + nl +
+            "date        debit        credit" + nl +
+            "20/02/2011               12" + nl +
+            "20/02/2011               18" + nl +
             "20/02/2011  300" + nl +
             nl +
             "Balance -270"
