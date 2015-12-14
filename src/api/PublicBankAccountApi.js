@@ -2,6 +2,9 @@ var money = require('../Money');
 var BankAccount = require('../BankAccount')
 var Statement = require('../Statement')
 
+function formatLine(line) {
+    return line[0] + "  " + line[1] + "             " + line[2]
+}
 function PublicBancAccountApi(dateProviderFn) {
 
     var account = new BankAccount(dateProviderFn);
@@ -18,8 +21,9 @@ function PublicBancAccountApi(dateProviderFn) {
         var statement = Statement.print(account.statement());
 
         var header = statement.header.join('        ');
+        var lines = statement.lines.map(formatLine).join('\n')
         var balance = "Balance " + statement.balance;
-        return [header,balance].join('\n');
+        return [header,lines, "", balance].join('\n');
 
     }
 

@@ -1,6 +1,7 @@
 var expect = require('chai').expect;
 var sinon  = require('sinon');
-
+require('approvals')
+    .mocha();
 var PublicBankAccountApi = require('../src/api/PublicBankAccountApi');
 var money = require('../src/Money');
 describe('Acceptance', function () {
@@ -14,16 +15,18 @@ describe('Acceptance', function () {
         account.withdraw(300);
 
         var statement = account.computeStatement();
-        var nl = "\n";
-        expect(statement).to.equal(
-            "date        debit        credit" + nl +
-            "20/02/2011               12" + nl +
-            "20/02/2011               18" + nl +
-            "20/02/2011  300" + nl +
-            nl +
-            "Balance -270"
-        )
+        this.verify(statement);
 
+        //var nl = "\n";
+        //expect(statement).to.equal(
+        //    "date        debit        credit" + nl +
+        //    "20/02/2011               12" + nl +
+        //    "20/02/2011               18" + nl +
+        //    "20/02/2011  300" + nl +
+        //    nl +
+        //    "Balance -270"
+        //)
+        //
         // ...
     });
 
