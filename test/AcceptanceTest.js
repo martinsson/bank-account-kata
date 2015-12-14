@@ -8,7 +8,9 @@ describe('Acceptance', function () {
 
     it('statements includes all movements', function () {
         var dateForAllTransactions = new Date(2011, 01, 20);
-        var dateProviderFn = sinon.stub().returns(dateForAllTransactions);
+        var dateProviderFn = sinon.stub().returns(dateForAllTransactions)
+        dateProviderFn.onSecondCall().returns(new Date(2012, 01, 01));
+        dateProviderFn.onThirdCall().returns(new Date(2012, 11, 25));
         var account = new PublicBankAccountApi(dateProviderFn);
         account.deposit(12);
         account.deposit(18);

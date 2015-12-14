@@ -14,6 +14,8 @@ function _lines(transactions) {
     return transactions.map(function (t) {
         var date = dateformat(t.date, "dd/mm/yyyy");
         var transactionAmount = t.money.amount;
+
+        // TODO here we really need some sort of polymorphic dispatch, or a tree visitor?
         var creditAmount = transactionAmount >0 ? transactionAmount: "";
         var debitAmount = transactionAmount <0 ? Money.negate(t.money).amount : "";
         return [date, debitAmount, creditAmount]
