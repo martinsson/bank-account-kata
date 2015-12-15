@@ -10,20 +10,24 @@ describe('BankAccount', function() {
     var account;
 
     beforeEach(function () {
-        account = new BankAccount(sinon.stub());
+        account = new BankAccount(sinon.stub(), []);
     })
 
     it('it has 0 balance when opened', function() {
-        expect(account.deposit(money(0))).to.deep.equal(money(0))
+        //expect(resultAccount).to.deep.equal(money(0))
+        expect(account.balance()).to.deep.equal(money(0))
     });
 
     it('deposits increases the balance', function() {
-        expect(account.deposit(money(30))).to.deep.equal(money(30))
+        var afterDeposit = account.deposit(money(30));
+        expect(afterDeposit.balance()).to.deep.equal(money(30))
+        //expect(afterDeposit).to.deep.equal(money(30))
     });
 
     it('withdraw decreases the balance', function() {
-        account.deposit(money(23));
-        expect(account.withdraw(money(20))).to.deep.equal(money(3))
+        var resultingAccount = account.deposit(money(23)).withdraw(money(20));
+        expect(resultingAccount.balance()).to.deep.equal(money(3))
+        //expect(account.withdraw(money(20))).to.deep.equal(money(3))
     });
 
     describe('statement()', function() {
@@ -34,8 +38,8 @@ describe('BankAccount', function() {
         });
 
         it('contains all transactions made on the account', function() {
-            account.deposit(money(10));
-            var statement = account.statement();
+
+            var statement = account.deposit(money(10)).statement();
 
             // consider :
             var transactionOf10 = new Statement([new Transaction(money(10))]);
@@ -48,11 +52,10 @@ describe('BankAccount', function() {
         it('every transaction contains its date', function() {
             var transactionDate = new Date(2015, 11, 30);
             var dateProvider = sinon.stub().returns(transactionDate);
-            var account = new BankAccount(dateProvider);
+            var account = new BankAccount(dateProvider, []);
 
-            account.deposit(money(15));
-            account.withdraw(money(15));
-            var statement = account.statement();
+            var resultAccount = account.deposit(money(15)).withdraw(money(15));
+            var statement = resultAccount.statement();
 
             // consider :
             var deposit15 = new Transaction(money(15), transactionDate);

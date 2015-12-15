@@ -7,14 +7,14 @@ function formatLine(line) {
 }
 function PublicBancAccountApi(dateProviderFn) {
 
-    var account = new BankAccount(dateProviderFn);
+    var account = new BankAccount(dateProviderFn, []);
 
     function deposit(amountInEuros) {
-        account.deposit(money(amountInEuros));
+        account = account.deposit(money(amountInEuros));
     }
 
     function withdraw(amountInEuros) {
-        account.withdraw(money(amountInEuros));
+        account = account.withdraw(money(amountInEuros));
     }
 
     function computeStatement() {
