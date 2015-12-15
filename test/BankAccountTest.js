@@ -4,6 +4,7 @@ var sinon = require('sinon');
 var BankAccount = require('../src/BankAccount');
 var money = require('../src/Money');
 var Statement = require('../src/Statement');
+var Transaction = require('../src/Transaction');
 
 describe('BankAccount', function() {
     var account;
@@ -35,20 +36,33 @@ describe('BankAccount', function() {
         it('contains all transactions made on the account', function() {
             account.deposit(money(10));
             var statement = account.statement();
-            expect(statement.transactions).to.have.length(1);
+
+            // consider :
+            var transactionOf10 = new Statement([new Transaction(money(10))]);
+            expect(statement).to.deep.equal(transactionOf10)
+            // versus
+            // expect(statement.transactions).to.have.length(1);
         });
 
 
         it('every transaction contains its date', function() {
-            var dateProvider = sinon.stub().returns(new Date(2015, 11, 30));
+            var transactionDate = new Date(2015, 11, 30);
+            var dateProvider = sinon.stub().returns(transactionDate);
             var account = new BankAccount(dateProvider);
 
             account.deposit(money(15));
             account.withdraw(money(15));
             var statement = account.statement();
-            var expectedDate = new Date(2015, 11, 30);
-            expect(statement.transactions[0]).to.have.property("date").to.deep.equal(expectedDate);
-            expect(statement.transactions[1]).to.have.property("date").to.deep.equal(expectedDate);
+
+            // consider :
+            var deposit15 = new Transaction(money(15), transactionDate);
+            var withDraw15 = new Transaction(money.negate(money(15)), transactionDate);
+            expect(statement).to.deep.equal(new Statement([deposit15, withDraw15]))
+
+
+            // versus
+            expect(statement.transactions[0]).to.have.property("date").to.deep.equal(transactionDate);
+            expect(statement.transactions[1]).to.have.property("date").to.deep.equal(transactionDate);
         });
 
     });
