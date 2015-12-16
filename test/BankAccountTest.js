@@ -14,20 +14,17 @@ describe('BankAccount', function() {
     })
 
     it('it has 0 balance when opened', function() {
-        //expect(resultAccount).to.deep.equal(money(0))
         expect(account.balance()).to.deep.equal(money(0))
     });
 
     it('deposits increases the balance', function() {
         var afterDeposit = account.deposit(money(30));
         expect(afterDeposit.balance()).to.deep.equal(money(30))
-        //expect(afterDeposit).to.deep.equal(money(30))
     });
 
     it('withdraw decreases the balance', function() {
         var resultingAccount = account.deposit(money(23)).withdraw(money(20));
         expect(resultingAccount.balance()).to.deep.equal(money(3))
-        //expect(account.withdraw(money(20))).to.deep.equal(money(3))
     });
 
     describe('statement()', function() {
@@ -43,9 +40,10 @@ describe('BankAccount', function() {
 
             // consider :
             var transactionOf10 = new Statement([new Transaction(money(10))]);
-            expect(statement).to.deep.equal(transactionOf10)
+            expect(statement).to.deep.equal(transactionOf10);
+
             // versus
-            // expect(statement.transactions).to.have.length(1);
+            expect(statement.transactions).to.have.length(1);
         });
 
 
